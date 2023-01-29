@@ -1,6 +1,6 @@
 import { Component } from 'react';
 import { fetchImages } from 'services/Api';
-import { ToastContainer } from 'react-toastify';
+import { ToastContainer, toast } from 'react-toastify';
 import Searchbar from './Searchbar';
 import ImageGallery from './ImageGallery';
 import Button from './Batton/Button';
@@ -34,10 +34,9 @@ class App extends Component {
         images: [...images, ...data.hits],
       }));
     } catch (error) {
-      console.log(error);
-      this.setState({ error: error.message });
+      this.setState({ error: toast.error('Sorry try again latter') });
     } finally {
-      this.setState({ loading: false });
+      this.setState({ loading: false, error: null });
     }
   }
 
@@ -100,9 +99,7 @@ class App extends Component {
             )}
           </>
         )}
-        {error && (
-          <p className={css.errorMessage}>{error}: Sorry try again latter</p>
-        )}
+        {error && <p>{error}</p>}
 
         {showModal && (
           <Modal close={closeModal}>
