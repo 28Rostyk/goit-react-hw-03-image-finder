@@ -34,6 +34,7 @@ class App extends Component {
         images: [...images, ...data.hits],
       }));
     } catch (error) {
+      console.log(error);
       this.setState({ error: error.message });
     } finally {
       this.setState({ loading: false });
@@ -63,7 +64,8 @@ class App extends Component {
   };
 
   render() {
-    const { images, showModal, largeImageURL, loading, page } = this.state;
+    const { images, showModal, largeImageURL, loading, page, error } =
+      this.state;
     const { onImageClick, loadMore, closeModal } = this;
     return (
       <>
@@ -79,6 +81,7 @@ class App extends Component {
             colors={['#e15b64', '#f47e60', '#f8b26a', '#abbd81', '#849b87']}
           />
         )}
+
         {images.length > 0 && (
           <>
             <ImageGallery images={images} onImageClick={onImageClick} />
@@ -96,6 +99,9 @@ class App extends Component {
               <Button loadMore={loadMore} title="Load more" />
             )}
           </>
+        )}
+        {error && (
+          <p className={css.errorMessage}>{error}: Sorry try again latter</p>
         )}
 
         {showModal && (
