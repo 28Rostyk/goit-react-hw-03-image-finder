@@ -29,9 +29,10 @@ class App extends Component {
     try {
       this.setState({ loading: true });
       const { search, page } = this.state;
-      const data = await fetchImages(search, page);
+      const hits = await fetchImages(search, page);
+
       this.setState(({ images }) => ({
-        images: [...images, ...data.hits],
+        images: [...images, ...hits],
       }));
     } catch (error) {
       this.setState({ error: toast.error('Sorry try again latter') });
